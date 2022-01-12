@@ -1,0 +1,46 @@
+WHITESPACE = _{ " "| "\t" }
+
+
+//scitific notation
+
+
+base_number={ ("+"|"-"|"") ~ 
+ ((ASCII_DIGIT+)~"."~(ASCII_DIGIT+)
+ |
+ ("."~(ASCII_DIGIT+))
+ |
+ ((ASCII_DIGIT+)~".")
+ |
+ (ASCII_DIGIT+))
+ }
+ 
+idx=@{("+"|"-"|"")~(ASCII_DIGIT+)}
+ 
+sci_num=@{base_number ~ ((("e"|"E")~idx)|"")}
+
+floating_num=@{sci_num|base_number}
+
+int_num=@{("+"|"-"|"")~ASCII_DIGIT+}
+
+
+Cm=_{ "CM"~(ASCII_ALPHANUMERIC| "." |","| "-"|"="|"/")*}
+Comments=_{ (Cm~NEWLINE)*~"CE" }
+//=============================================================
+Gw={ "GW"~int_num~int_num~floating_num~floating_num~floating_num~floating_num~floating_num~floating_num~floating_num}
+Gc={ "GC"~int_num~int_num~floating_num~floating_num~floating_num }
+Wire={ Gw~(NEWLINE~Gc)? }
+Gm={ "GM"~int_num~int_num~floating_num~floating_num~floating_num~floating_num~floating_num~floating_num}
+Ge={ "GE"~int_num }
+
+Geom={ (Wire~NEWLINE)+~((Wire~NEWLINE)|(Gm~NEWLINE))*~Ge}
+
+//=============================================================
+Gn={ "GN"~int_num~int_num~floating_num~floating_num~floating_num~floating_num~(floating_num~floating_num?)?}
+Ek={ "EK"~int_num? }
+Ex={ "EX"~int_num~int_num~int_num~int_num~floating_num~floating_num~floating_num~(floating_num~floating_num~floating_num)?}
+Tl={ "TL"~int_num~int_num~int_num~int_num~floating_num~floating_num~floating_num~floating_num~floating_num~floating_num}
+Fr=_{ "FR"~int_num~int_num~int_num~int_num~floating_num~floating_num}
+Rp=_{ "RP"~int_num~int_num~int_num~int_num~floating_num~floating_num~floating_num~floating_num~floating_num~floating_num}
+En=_{ "EN" }
+
+NecFile={(Comments~NEWLINE)?~Geom~NEWLINE~((Gn|Ek|Ex|Tl|Fr|Rp)~NEWLINE)*~En}
