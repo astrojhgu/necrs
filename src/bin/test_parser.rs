@@ -1,7 +1,6 @@
 extern crate necrs;
 use std::fs::read_to_string;
 
-use pest::Parser;
 
 use necrs::nec_parser::{parse_nec_file, parse_numbers, NecParser, Rule};
 

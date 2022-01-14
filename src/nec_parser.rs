@@ -63,6 +63,12 @@ pub fn parse_nec_file(pair: Pair<'_, Rule>) -> RawNecContext {
                                 if flist.len() == 6 { 0 } else { flist[6] as i32 },
                             );
                         }
+                        Rule::Gs => {
+                            let (ilist, flist)=parse_numbers(geom_item.clone());
+                            assert_eq!(ilist.len(), 2);
+                            assert_eq!(flist.len(), 1);
+                            unimplemented!()
+                        }
                         Rule::Ge => {
                             let (ilist, flist) = parse_numbers(geom_item.clone());
                             assert_eq!(ilist.len(), 1);
@@ -81,7 +87,7 @@ pub fn parse_nec_file(pair: Pair<'_, Rule>) -> RawNecContext {
                     flist.push(0.0);
                     flist.push(0.0);
                 }
-                assert_eq!(ilist.len(), 2);
+                assert_eq!(ilist.len(), 4);
                 context.nec_gn_card(
                     ilist[0], ilist[1], flist[0], flist[1], flist[2], flist[3], flist[4], flist[5],
                 );

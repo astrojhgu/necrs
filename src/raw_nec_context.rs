@@ -361,6 +361,18 @@ impl RawNecContext {
         })
     }
 
+    pub fn rp_from_npix(&mut self, npix: usize, calc_mode: i32, output_format: i32,normalization: i32,  D: i32, A: i32, radial_distance: f64, gain_norm: f64)->(Vec<f64>, Vec<f64>) {
+        let angular_resolution=(4.0*std::f64::consts::PI/npix as f64).sqrt().to_degrees();
+        let nphi=(360.0/angular_resolution).ceil() as usize+1;
+        let ntheta=(nphi-1)/2+1;
+        let dphi=360.0/(nphi-1) as f64;
+        let dtheta=180.0/(ntheta-1) as f64;
+        let theta_list=(0..ntheta).map(|i| i as f64*dtheta).collect();
+        let phi_list=(0..nphi).map(|i| i as f64*dphi).collect();
+        self.nec_rp_card(calc_mode, ntheta as i32, nphi as i32, output_format, normalization, D, A, 0.0, 0.0, dtheta, dphi, radial_distance, gain_norm);
+        (theta_list, phi_list)
+    }
+
     pub fn nec_pt_card(
         &mut self,
         itmp1: ::std::os::raw::c_int,

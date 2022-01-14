@@ -23,24 +23,25 @@ floating_num=@{sci_num|base_number}
 int_num=@{("+"|"-"|"")~ASCII_DIGIT+}
 
 
-Cm=_{ "CM"~(ASCII_ALPHANUMERIC| "." |","| "-"|"="|"/")*}
+Cm=_{ "CM"~(ASCII_ALPHANUMERIC| "." |","| "-"|"="|"/"|":")*}
 Comments=_{ (Cm~NEWLINE)*~"CE" }
 //=============================================================
-Gw={ "GW"~int_num~int_num~floating_num~floating_num~floating_num~floating_num~floating_num~floating_num~floating_num}
-Gc={ "GC"~int_num~int_num~floating_num~floating_num~floating_num }
+Gw={ "GW"~int_num{2}~floating_num{7}}
+Gc={ "GC"~int_num{2}~floating_num{3}}
 Wire={ Gw~(NEWLINE~Gc)? }
-Gm={ "GM"~int_num~int_num~floating_num~floating_num~floating_num~floating_num~floating_num~floating_num}
+Gm={ "GM"~int_num{2}~floating_num{6}}
+Gs={ "GS"~int_num{2}~floating_num }
 Ge={ "GE"~int_num }
 
-Geom={ (Wire~NEWLINE)+~((Wire~NEWLINE)|(Gm~NEWLINE))*~Ge}
+Geom={ (Wire~NEWLINE)+~((Wire~NEWLINE)|(Gm~NEWLINE)|(Gs~NEWLINE))*~Ge}
 
 //=============================================================
-Gn={ "GN"~int_num~int_num~floating_num~floating_num~floating_num~floating_num~(floating_num~floating_num?)?}
+Gn={ "GN"~int_num{4}~floating_num{4,6}}
 Ek={ "EK"~int_num? }
-Ex={ "EX"~int_num~int_num~int_num~int_num~floating_num~floating_num~floating_num~(floating_num~floating_num~floating_num)?}
-Tl={ "TL"~int_num~int_num~int_num~int_num~floating_num~floating_num~floating_num~floating_num~floating_num~floating_num}
-Fr=_{ "FR"~int_num~int_num~int_num~int_num~floating_num~floating_num}
-Rp=_{ "RP"~int_num~int_num~int_num~int_num~floating_num~floating_num~floating_num~floating_num~floating_num~floating_num}
+Ex={ "EX"~int_num{4}~floating_num{3,6}}
+Tl={ "TL"~int_num{4}~floating_num{6}}
+Fr=_{ "FR"~int_num{4}~floating_num{2}}
+Rp=_{ "RP"~int_num{4}~floating_num{6}}
 En=_{ "EN" }
 
 NecFile={(Comments~NEWLINE)?~Geom~NEWLINE~((Gn|Ek|Ex|Tl|Fr|Rp)~NEWLINE)*~En}
