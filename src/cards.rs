@@ -1,3 +1,4 @@
+#![allow(non_snake_case)]
 use crate::raw_nec_context::RawNecContext;
 
 pub trait Card {
@@ -205,7 +206,7 @@ impl Card for Gn {
     }
 }
 
-enum Fr {
+pub enum Fr {
     Linear {
         nfreq: i32,
         f0_MHz: f64,
@@ -235,7 +236,7 @@ impl Card for Fr {
     }
 }
 
-enum Ek {
+pub enum Ek {
     Standard,
     Thin,
 }

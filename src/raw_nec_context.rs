@@ -1,8 +1,9 @@
+#![allow(non_snake_case)]
 use crate::bindings;
 
 use std::{
     ffi::{CStr, CString},
-    os::raw::{c_int, c_long},
+    os::raw::{c_long},
     path::Path,
 };
 
