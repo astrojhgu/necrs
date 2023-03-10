@@ -5,7 +5,15 @@ stdenv.mkDerivation {
     buildInputs = [clang
     llvmPackages.libclang.lib
     pkg-config
-    necpp
+    libtool
+    lapack
+    gcc
+    blas
+    autoconf
+    automake
+    gfortran
+    (lib.getLib gfortran.cc)
+    #necpp
     ];
     hardeningDisable = [ "all" ];
     #buildInputs = [gcc-unwrapped gcc-unwrapped.out gcc-unwrapped.lib];
