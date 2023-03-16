@@ -461,7 +461,7 @@ impl RawNecContext {
         check_result(unsafe {
             bindings::nec_pl_card(
                 self.ptr,
-                outfile.as_ptr() as *const u8,
+                outfile.as_ptr() as *const i8,
                 itmp1,
                 itmp2,
                 itmp3,
